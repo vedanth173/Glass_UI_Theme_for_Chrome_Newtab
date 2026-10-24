@@ -1,0 +1,429 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: #000000;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 28px;
+  overflow: hidden;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  position: relative;
+  transition: background-image 0.4s ease;
+}
+
+/* Background Video & Vignette Overlay */
+.bg-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  transition: filter 0.5s ease;
+}
+
+.bg-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  z-index: 1;
+  pointer-events: none;
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Active Focus State: Darkens background & dims wallpaper when typing */
+body.search-focused .bg-overlay {
+  background: rgba(0, 0, 0, 0.72);
+}
+
+body.search-focused .bg-video {
+  filter: brightness(0.6) blur(4px);
+}
+
+/* =========================================
+   1. Container & Entrance Animation
+   ========================================= */
+
+.container {
+  width: 100%;
+  max-width: 720px;
+  padding: 0 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pageEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pageEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
+}
+
+/* =========================================
+   2. True Frosted Glass Clock (Pinned to Top)
+   ========================================= */
+
+.hyper-clock-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0px;
+  margin-bottom: 130px;
+  user-select: none;
+  pointer-events: none;
+}
+
+.hyper-date {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 8px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+.clock-glass-stage {
+  position: relative;
+  width: 440px;
+  height: 155px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 16px 36px rgba(0, 0, 0, 0.8));
+}
+
+.clock-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+}
+
+.svg-clock-font {
+  font-family: "Big Shoulders Display", Impact, sans-serif;
+  font-size: 190px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.svg-clock-rim {
+  fill: url(#glass-fill-grad);
+  stroke: url(#glass-rim-grad);
+  stroke-width: 2.2px;
+  stroke-linejoin: round;
+}
+
+/* =========================================
+   3. Frosted Glass Search Bar
+   ========================================= */
+
+.glass-search-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  padding: 15px 26px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85),
+              inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: subtlePulse 5s ease-in-out infinite alternate;
+}
+
+@keyframes subtlePulse {
+  0% {
+    border-color: rgba(255, 255, 255, 0.12);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+  }
+  100% {
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9),
+                0 0 24px rgba(255, 255, 255, 0.04),
+                inset 0 1px 1px rgba(255, 255, 255, 0.25);
+  }
+}
+
+.glass-search-box:hover,
+.glass-search-box:focus-within {
+  transform: translateY(-2px) scale(1.015);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.95),
+              0 0 35px rgba(255, 255, 255, 0.08),
+              inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.search-icon {
+  width: 20px;
+  height: 20px;
+  stroke: rgba(255, 255, 255, 0.55);
+  margin-right: 14px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease, stroke 0.3s ease;
+}
+
+.glass-search-box:focus-within .search-icon {
+  stroke: #ffffff;
+  transform: rotate(-10deg) scale(1.08);
+}
+
+.glass-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 1.05rem;
+  letter-spacing: 0.3px;
+}
+
+.glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+  transition: opacity 0.2s ease;
+}
+
+.glass-search-box:focus-within .glass-input::placeholder {
+  opacity: 0.7;
+}
+
+/* =========================================
+   4. Frosted Glass Shortcuts
+   ========================================= */
+
+.shortcuts-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+  width: 100%;
+}
+
+.glass-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  width: 84px;
+  padding: 12px 6px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85),
+              inset 0 1px 1px rgba(255, 255, 255, 0.14);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 8px;
+  transition: all 0.25s ease;
+}
+
+.tile-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  border-radius: 6px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tile-title {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
+
+.glass-tile:hover {
+  transform: translateY(-5px) scale(1.04);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.95),
+              0 0 18px rgba(255, 255, 255, 0.05),
+              inset 0 1px 2px rgba(255, 255, 255, 0.25);
+}
+
+.glass-tile:hover .tile-icon {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.glass-tile:hover .tile-icon img {
+  transform: scale(1.12);
+}
+
+.glass-tile:hover .tile-title {
+  color: #ffffff;
+}
+
+.glass-tile:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* =========================================
+   5. Bottom-Right Edit Icon & Glass Menu
+   ========================================= */
+
+.bg-controls {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+  z-index: 30;
+}
+
+.glass-edit-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85),
+              inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-edit-btn svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.25s ease;
+}
+
+.glass-edit-btn:hover,
+.glass-edit-btn.active {
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.95),
+              inset 0 1px 2px rgba(255, 255, 255, 0.28);
+}
+
+.glass-edit-btn:active {
+  transform: scale(0.96);
+}
+
+.glass-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  min-width: 170px;
+  border-radius: 18px;
+  background: rgba(20, 20, 22, 0.65);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9),
+              inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  transform-origin: bottom right;
+  animation: menuPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes menuPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+}
+
+.menu-item svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  flex-shrink: 0;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.reset-item {
+  color: #ff6b6b;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 2px;
+  padding-top: 11px;
+  border-radius: 0 0 12px 12px;
+}
+
+.reset-item:hover {
+  background: rgba(255, 107, 107, 0.12);
+  color: #ff8787;
+}
+
+.hidden {
+  display: none !important;
+}
