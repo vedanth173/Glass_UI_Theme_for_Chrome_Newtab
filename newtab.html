@@ -35,7 +35,10 @@
             </linearGradient>
           </defs>
 
-          <text id="stroke-time-text" x="50%" y="84%" text-anchor="middle" class="svg-clock-font svg-clock-rim">09:20</text>
+          <!-- Split elements so the colon can be precisely centered vertically -->
+          <text x="40%" y="84%" text-anchor="end" class="svg-clock-font svg-clock-rim" id="clock-hours">10</text>
+          <text x="50%" y="74%" text-anchor="middle" class="svg-clock-font svg-clock-rim" id="clock-colon">:</text>
+          <text x="60%" y="84%" text-anchor="start" class="svg-clock-font svg-clock-rim" id="clock-minutes">22</text>
         </svg>
       </div>
     </div>

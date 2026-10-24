@@ -1,7 +1,9 @@
 // =========================================
-// 1. Live Frosted Glass Clock
+// 1. Live Frosted Glass Clock (Perfectly Centered Colon)
 // =========================================
-const strokeTimeEl = document.getElementById('stroke-time-text');
+const clockHoursEl = document.getElementById('clock-hours');
+const clockColonEl = document.getElementById('clock-colon');
+const clockMinutesEl = document.getElementById('clock-minutes');
 const dateEl = document.getElementById('hyper-date');
 
 function updateClock() {
@@ -18,12 +20,13 @@ function updateClock() {
   hours = hours ? hours : 12;
   const paddedHours = String(hours).padStart(2, '0');
 
-  strokeTimeEl.textContent = `${paddedHours}:${minutes}`;
+  clockHoursEl.textContent = paddedHours;
+  clockColonEl.textContent = ':';
+  clockMinutesEl.textContent = minutes;
 }
 
 updateClock();
 setInterval(updateClock, 1000);
-
 // =========================================
 // 2. Edit Button Popover & Media Storage (IndexedDB)
 // =========================================
