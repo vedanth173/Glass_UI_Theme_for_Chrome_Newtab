@@ -430,3 +430,136 @@ body.search-focused .bg-video {
 
 
 
+/* =========================================
+   Bottom-Left Greeting Style
+   ========================================= */
+
+/* .bottom-greeting {
+  position: fixed;
+  bottom: 28px;
+  left: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 20;
+  user-select: none;
+  pointer-events: none;
+}
+
+.greeting-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.70);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
+  line-height: 1.1;
+}
+
+.greeting-subtitle {
+ font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.40);
+  margin-top: 0.15rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.01em;
+} */
+
+
+/* =========================================
+   Bottom-Left Greeting (Caveat Cursive + Typewriter)
+   ========================================= */
+
+/* =========================================
+   Bottom-Left Greeting (Caveat Cursive + Typewriter + Cursor)
+   ========================================= */
+
+/* =========================================
+   Bottom-Left Greeting (Caveat Cursive + Typewriter + Auto-Hide Cursor)
+   ========================================= */
+
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bottom-section {
+  position: fixed;
+  bottom: 24px;
+  left: 28px;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  z-index: 20;
+  user-select: none;
+  pointer-events: none;
+  animation: greeting-enter 1s 0.4s var(--ease-out) both;
+}
+
+@keyframes greeting-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.greeting-block {
+  padding-left: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting-text {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 3rem;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
+  line-height: 1.05;
+  
+  /* Typewriter with cursor that disappears after typing */
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  padding-right: 6px; /* Prevents cursor from overlapping the last letter */
+  border-right: 3px solid rgba(255, 255, 255, 0.8);
+  animation: typing 1.2s 0.6s steps(20, end) forwards,
+             blink 0.75s step-end infinite,
+             remove-cursor 0s 1.8s forwards; /* Removes cursor border when typing finishes */
+}
+
+.greeting-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.60);
+  margin-top: 0.05rem;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
+  letter-spacing: 0.01em;
+  
+  /* Subtitle Typewriter with cursor that disappears after typing */
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  padding-right: 6px;
+  border-right: 2px solid rgba(255, 255, 255, 0.6);
+  animation: typing 1s 1.5s steps(20, end) forwards,
+             blink 0.75s step-end infinite,
+             remove-cursor 0s 2.5s forwards;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent; }
+  50% { border-color: rgba(255, 255, 255, 0.8); }
+}
+
+@keyframes remove-cursor {
+  to { border-right: none; }
+}

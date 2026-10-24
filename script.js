@@ -202,3 +202,35 @@ if (searchInput) {
     }
   });
 }
+
+// =========================================
+// Dynamic Bottom-Left Greeting
+// =========================================
+const greetingTextEl = document.getElementById('greeting-text');
+const greetingSubEl = document.getElementById('greeting-sub');
+
+function updateGreeting() {
+  const hour = new Date().getHours();
+  let title = "Good Night";
+  let subtitle = "Cloudy night.";
+
+  if (hour >= 5 && hour < 12) {
+    title = "Good Morning";
+    subtitle = "Make today count.";
+  } else if (hour >= 12 && hour < 17) {
+    title = "Good Afternoon";
+    subtitle = "Keep up the momentum.";
+  } else if (hour >= 17 && hour < 21) {
+    title = "Good Evening";
+    subtitle = "Wind down and relax.";
+  } else {
+    title = "Good Night";
+    subtitle = "Rest well, recharge.";
+  }
+
+  if (greetingTextEl) greetingTextEl.textContent = title;
+  if (greetingSubEl) greetingSubEl.textContent = subtitle;
+}
+
+updateGreeting();
+setInterval(updateGreeting, 60000);
