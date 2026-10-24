@@ -97,9 +97,9 @@ body.search-focused .bg-video {
   font-size: 1.05rem;
   font-weight: 500;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 1.85);
   margin-bottom: 8px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 1.6);
 }
 
 .clock-glass-stage {
@@ -132,7 +132,7 @@ body.search-focused .bg-video {
 .svg-clock-rim {
   fill: url(#glass-fill-grad);
   stroke: url(#glass-rim-grad);
-  stroke-width: 2.2px;
+  stroke-width: 1.6px;
   stroke-linejoin: round;
 }
 
@@ -427,3 +427,6 @@ body.search-focused .bg-video {
 .hidden {
   display: none !important;
 }
+
+
+
