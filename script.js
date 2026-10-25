@@ -177,34 +177,46 @@ bgResetBtn.addEventListener('click', async () => {
 });
 
 // =========================================
-// 3. Search Bar Focus & Typing Background Dimming Animation
+// 3. Search Bar Hover, Focus & Typing Background Dimming
 // =========================================
+const searchBox = document.querySelector('.glass-search-box');
 const searchInput = document.querySelector('.glass-input');
 
-if (searchInput) {
-  searchInput.addEventListener('focus', () => {
+if (searchBox && searchInput) {
+  // Darken when cursor moves onto the search bar
+  searchBox.addEventListener('mouseenter', () => {
     document.body.classList.add('search-focused');
   });
 
-  searchInput.addEventListener('blur', () => {
-    if (searchInput.value.trim() === '') {
+  // Restore background when cursor leaves (only if not actively clicked/typing)
+  searchBox.addEventListener('mouseleave', () => {
+    if (document.activeElement !== searchInput && searchInput.value.trim() === '') {
       document.body.classList.remove('search-focused');
     }
   });
 
+  // Keep dark when clicked/focused
+  searchInput.addEventListener('focus', () => {
+    document.body.classList.add('search-focused');
+  });
+
+  // Restore when clicking away if input is empty
+  searchInput.addEventListener('blur', () => {
+    if (searchInput.value.trim() === '' && !searchBox.matches(':hover')) {
+      document.body.classList.remove('search-focused');
+    }
+  });
+
+  // Keep dark while typing
   searchInput.addEventListener('input', () => {
     if (searchInput.value.trim().length > 0) {
       document.body.classList.add('search-focused');
-    } else {
-      if (document.activeElement !== searchInput) {
-        document.body.classList.remove('search-focused');
-      }
     }
   });
 }
 
 // =========================================
-// Dynamic Bottom-Left Greeting
+// 4.Dynamic Bottom-Left Greeting
 // =========================================
 const greetingTextEl = document.getElementById('greeting-text');
 const greetingSubEl = document.getElementById('greeting-sub');

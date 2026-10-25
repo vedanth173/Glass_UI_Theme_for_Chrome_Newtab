@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 body {
   height: 100vh;
   width: 100vw;
@@ -40,15 +44,17 @@ body {
   background: rgba(0, 0, 0, 0);
   z-index: 1;
   pointer-events: none;
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.4s var(--ease-out);
 }
 
-/* Active Focus State: Darkens background & dims wallpaper when typing */
-body.search-focused .bg-overlay {
+/* Darkens background when hovering, focusing, or typing in the search bar */
+body.search-focused .bg-overlay,
+body:has(.glass-search-box:hover) .bg-overlay {
   background: rgba(0, 0, 0, 0.72);
 }
 
-body.search-focused .bg-video {
+body.search-focused .bg-video,
+body:has(.glass-search-box:hover) .bg-video {
   filter: brightness(0.6) blur(4px);
 }
 
@@ -64,7 +70,7 @@ body.search-focused .bg-video {
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: pageEntrance 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pageEntrance 0.7s var(--ease-out) forwards;
 }
 
 @keyframes pageEntrance {
@@ -97,9 +103,9 @@ body.search-focused .bg-video {
   font-size: 1.05rem;
   font-weight: 500;
   letter-spacing: 1px;
-  color: rgba(255, 255, 255, 1.85);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 8px;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 1.6);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 .clock-glass-stage {
@@ -132,7 +138,7 @@ body.search-focused .bg-video {
 .svg-clock-rim {
   fill: url(#glass-fill-grad);
   stroke: url(#glass-rim-grad);
-  stroke-width: 1.6px;
+  stroke-width: 2.2px;
   stroke-linejoin: round;
 }
 
@@ -152,7 +158,7 @@ body.search-focused .bg-video {
   padding: 15px 26px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85),
               inset 0 1px 1px rgba(255, 255, 255, 0.18);
-  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.35s var(--ease-out);
   animation: subtlePulse 5s ease-in-out infinite alternate;
 }
 
@@ -241,7 +247,7 @@ body.search-focused .bg-video {
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85),
               inset 0 1px 1px rgba(255, 255, 255, 0.14);
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.28s var(--ease-out);
 }
 
 .tile-icon {
@@ -262,7 +268,7 @@ body.search-focused .bg-video {
   height: 26px;
   object-fit: contain;
   border-radius: 6px;
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.25s var(--ease-out);
 }
 
 .tile-title {
@@ -330,7 +336,7 @@ body.search-focused .bg-video {
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85),
               inset 0 1px 1px rgba(255, 255, 255, 0.18);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.25s var(--ease-out);
 }
 
 .glass-edit-btn svg {
@@ -367,7 +373,7 @@ body.search-focused .bg-video {
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.9),
               inset 0 1px 1px rgba(255, 255, 255, 0.18);
   transform-origin: bottom right;
-  animation: menuPop 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: menuPop 0.2s var(--ease-out) forwards;
 }
 
 @keyframes menuPop {
@@ -424,63 +430,9 @@ body.search-focused .bg-video {
   color: #ff8787;
 }
 
-.hidden {
-  display: none !important;
-}
-
-
-
 /* =========================================
-   Bottom-Left Greeting Style
+   6. Bottom-Left Greeting (Caveat + Typewriter)
    ========================================= */
-
-/* .bottom-greeting {
-  position: fixed;
-  bottom: 28px;
-  left: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  z-index: 20;
-  user-select: none;
-  pointer-events: none;
-}
-
-.greeting-title {
-  font-family: 'Caveat', cursive;
-  font-size: 2.8rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.70);
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
-  line-height: 1.1;
-}
-
-.greeting-subtitle {
- font-family: 'Caveat', cursive;
-  font-size: 1.15rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.40);
-  margin-top: 0.15rem;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
-  letter-spacing: 0.01em;
-} */
-
-
-/* =========================================
-   Bottom-Left Greeting (Caveat Cursive + Typewriter)
-   ========================================= */
-
-/* =========================================
-   Bottom-Left Greeting (Caveat Cursive + Typewriter + Cursor)
-   ========================================= */
-
-/* =========================================
-   Bottom-Left Greeting (Caveat Cursive + Typewriter + Auto-Hide Cursor)
-   ========================================= */
-
-:root {
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-}
 
 .bottom-section {
   position: fixed;
@@ -518,16 +470,14 @@ body.search-focused .bg-video {
   color: #fff;
   text-shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
   line-height: 1.05;
-  
-  /* Typewriter with cursor that disappears after typing */
   white-space: nowrap;
   overflow: hidden;
   width: 0;
-  padding-right: 6px; /* Prevents cursor from overlapping the last letter */
+  padding-right: 6px;
   border-right: 3px solid rgba(255, 255, 255, 0.8);
   animation: typing 1.2s 0.6s steps(20, end) forwards,
              blink 0.75s step-end infinite,
-             remove-cursor 0s 1.8s forwards; /* Removes cursor border when typing finishes */
+             remove-cursor 0s 1.8s forwards;
 }
 
 .greeting-sub {
@@ -538,8 +488,6 @@ body.search-focused .bg-video {
   margin-top: 0.05rem;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.25);
   letter-spacing: 0.01em;
-  
-  /* Subtitle Typewriter with cursor that disappears after typing */
   white-space: nowrap;
   overflow: hidden;
   width: 0;
@@ -562,4 +510,8 @@ body.search-focused .bg-video {
 
 @keyframes remove-cursor {
   to { border-right: none; }
+}
+
+.hidden {
+  display: none !important;
 }
