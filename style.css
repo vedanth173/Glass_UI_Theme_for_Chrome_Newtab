@@ -12,6 +12,7 @@ body {
   height: 100vh;
   width: 100vw;
   background-color: #000000;
+  background-image: none;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -234,6 +235,7 @@ body:has(.glass-search-box:hover) .bg-video {
 }
 
 .glass-tile {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -277,6 +279,10 @@ body:has(.glass-search-box:hover) .bg-video {
   font-weight: 500;
   letter-spacing: 0.2px;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 72px;
+  text-align: center;
   transition: color 0.25s ease;
 }
 
@@ -322,12 +328,15 @@ body:has(.glass-search-box:hover) .bg-video {
 }
 
 .glass-edit-btn {
-  width: 44px;
   height: 44px;
-  border-radius: 50%;
+  max-width: 44px; /* Starts as a circle */
+  padding: 0 13px;
+  border-radius: 999px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  gap: 0px;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -336,23 +345,58 @@ body:has(.glass-search-box:hover) .bg-video {
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85),
               inset 0 1px 1px rgba(255, 255, 255, 0.18);
-  transition: all 0.25s var(--ease-out);
+  transition: max-width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              gap 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.25s ease,
+              border-color 0.25s ease,
+              color 0.25s ease,
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease;
 }
 
 .glass-edit-btn svg {
   width: 18px;
   height: 18px;
-  transition: transform 0.25s ease;
+  stroke: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.edit-label {
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Smoothly expand pill & reveal "Edit" text on hover (without opening the menu) */
 .glass-edit-btn:hover,
 .glass-edit-btn.active {
-  transform: translateY(-2px) scale(1.05);
+  max-width: 120px;
+  padding: 0 16px;
+  gap: 9px;
+  transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.3);
   color: #ffffff;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.95),
               inset 0 1px 2px rgba(255, 255, 255, 0.28);
+}
+
+.glass-edit-btn:hover .edit-label,
+.glass-edit-btn.active .edit-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.glass-edit-btn:hover svg {
+  transform: scale(1.06);
 }
 
 .glass-edit-btn:active {
@@ -514,4 +558,147 @@ body:has(.glass-search-box:hover) .bg-video {
 
 .hidden {
   display: none !important;
+}
+
+/* =========================================
+   7. Frosted Glass Shortcut Modal & Delete Controls
+   ========================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeInModal 0.25s var(--ease-out) forwards;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.glass-modal {
+  width: 100%;
+  max-width: 350px;
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(18, 18, 22, 0.85);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.95),
+              inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  animation: menuPop 0.25s var(--ease-out) forwards;
+}
+
+.modal-title {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+
+#custom-item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.modal-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.modal-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.modal-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.save-btn {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000000;
+  font-weight: 600;
+}
+
+.save-btn:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(255, 255, 255, 0.25);
+}
+
+.delete-custom-btn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+  z-index: 5;
+}
+
+.glass-tile:hover .delete-custom-btn {
+  opacity: 1;
+}
+
+.delete-custom-btn:hover {
+  background: #ff5252;
+  color: #ffffff;
+  border-color: #ff5252;
 }

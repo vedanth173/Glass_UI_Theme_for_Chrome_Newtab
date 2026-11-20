@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>New Tab</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Big+Shoulders+Display:wght@800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
   <!-- Background Video Layer (Hidden unless a video is uploaded) -->
@@ -26,7 +26,7 @@
           <defs>
             <linearGradient id="glass-rim-grad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="rgba(255, 255, 255, 0.12)" />
-              <stop offset="200%" stop-color="rgba(255, 255, 255, 0.12)" />
+              <stop offset="50%" stop-color="rgba(255, 255, 255, 0.12)" />
               <stop offset="100%" stop-color="rgba(255, 255, 255, 0.12)" />
             </linearGradient>
 
@@ -119,14 +119,11 @@
 
   </main>
 
-
-  </main>
-
   <!-- Bottom-Left Greeting Section -->
   <div class="bottom-section">
     <div class="greeting-block">
       <div id="greeting-text" class="greeting-text">Good Night</div>
-      <div id="greeting-sub" class="greeting-sub">Cloudy night.</div>
+      <div id="greeting-sub" class="greeting-sub">Rest well, recharge.</div>
     </div>
   </div>
 
@@ -137,6 +134,24 @@
     <input type="file" id="video-upload" accept="video/mp4,video/webm,video/ogg" hidden />
 
     <div id="bg-menu" class="glass-menu hidden">
+      <button id="add-shortcut-btn" class="menu-item" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+          <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+          <path d="M10 17.5h-7M6.5 14v7"></path>
+        </svg>
+        <span>Add Shortcut</span>
+      </button>
+
+      <button id="oled-black-btn" class="menu-item" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"></path>
+        </svg>
+        <span>OLED Deep Black</span>
+      </button>
+
       <label for="photo-upload" class="menu-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
@@ -159,7 +174,7 @@
           <path d="M3 6h18"></path>
           <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
         </svg>
-        <span>Reset to Black</span>
+        <span>Reset to Default</span>
       </button>
     </div>
 
@@ -168,7 +183,23 @@
         <path d="M12 20h9"></path>
         <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
       </svg>
+      <span class="edit-label">Edit</span>
     </button>
+  </div>
+
+  <!-- Frosted Glass Modal for Adding Shortcut -->
+  <div id="custom-modal-overlay" class="modal-overlay hidden">
+    <div class="glass-modal">
+      <h3 id="modal-title" class="modal-title">Add Shortcut</h3>
+      <form id="custom-item-form" autocomplete="off">
+        <input type="text" id="item-name-input" class="modal-input" placeholder="Name (e.g., GitHub)" required maxlength="20" />
+        <input type="text" id="item-url-input" class="modal-input" placeholder="URL (e.g., github.com)" required />
+        <div class="modal-actions">
+          <button type="button" id="modal-cancel-btn" class="modal-btn cancel-btn">Cancel</button>
+          <button type="submit" class="modal-btn save-btn">Add</button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <script src="script.js"></script>
